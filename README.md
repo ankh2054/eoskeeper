@@ -1,6 +1,8 @@
 # eoskeeper
 EOS BP节点高可用守护进程
 
+[FOR English](https://github.com/eosstore/eoskeeper/blob/master/README-EN.md)
+
 ### 提示
 如果您计划使用本程序，请仔细阅读源码eoskeeper.py。
 
