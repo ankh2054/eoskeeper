@@ -2,7 +2,7 @@
 
 [中文链接](https://github.com/eosstore/eoskeeper/blob/master/README.md)
 
-### prompt
+### Prompt
 If you plan to use this program, read the source code:eoskeeper.py carefully.
 
 
@@ -45,45 +45,45 @@ mobiles             = "1821050****,1352131****"     #The phone number of the per
 
 ```
 
-### influxdb的两个表
-BP节点表 （共3台机器）
-表名 eosbpinfo  
-字段名/中文名            属性          示例 
-* host/主机名            (字符串)       eos-open-fn-1-1
-* hbn/当前块             (整数)         19876
-* lib/不可逆块            (整数)        19856
-* linkn/连接数量          (整数)        34
-* lpbt/上次出块时间     （字符串）        10秒前
-* paused                 （字符串）     是
-* info/告警信息         （字符串，最长60个字符） 
+### Two list of influxdb 
+BP list （3 hosts）
+list-name: eosbpinfo  
+Field name/Chinese name       attribute      sample 
+* host/host name              (string)      eos-open-fn-1-1
+* hbn/current block           (int)         19876
+* lib/irreversible block      (int)         19856
+* linkn/link number           (int)         34
+* lpbt/last produce time     （string）      10秒前
+* paused                     （string）      yes
+* info/alarm information （string，No more than 60 characters） 
          
 
-全节点表 （共7台机器）
-表名 eosfninfo
-* 字段名/中文名            属性          示例 
-* host/主机名            (字符串)       eos-open-fn-1-1
-* hbn/当前块             (整数)         19876
-* lib/不可逆块            (整数)        19856
-* linkn/连接数量          (整数)        34
-* info/告警信息         （字符串，最长60个字符） 
+fullnode list （7 hosts）
+list-name: eosfninfo
+* Field name/Chinese name       attribute      sample 
+* host/host name               (string)       eos-open-fn-1-1
+* hbn/current block             (int)         19876
+* lib/irreversible block        (int)         19856
+* linkn/link number             (int)         34
+* info/alarm information      （string，No more than 60 characters） 
 
 
-### 逻辑说明
+### Logic instructions
 
-eoskeeper是一个用于监控eos程序的守护进程，并有报警和推送参数到influxdb的功能。
+eoskeeper is a monitor the daemon of the eos program,with function of alarm and push message to influxdb。
 
-== 程序原理 ==  
-我们的节点分为四种角色：A角色（BP）、B角色（备用BP，第一道防线）、C角色（备用BP，第二道防线）、普通全节点（后面用F角色表示）  
-在三个主机中会分别给eoskeeper守护进程配置文件中设置为A、B、C三个角色，以下是eoskeeper根据角色做出相应的动作。  
-当eosstorebest在前21名，B主机eosio运行正常，并且，B主机检测到2轮出块循环都没有eosstorebest账户时，B主机的eoskeeper会执行命令，使B出块。  
-当eosstorebest在前21名，C主机eosio运行正常，并且，C主机检测到6轮出块循环都没有eosstorebest账户时，C主机的eoskeeper会执行命令，使C出块。    
+== Principle of procedure ==  
+Our have 4 roles:A(BP),B(backup BP,the first line of defense),C(backup BP,the second line of defense),fullnode(role F)
+The three hosts will be set to the roles of A, B, and C in the configuration file of the eoskeeper daemon. The following is the action taken by eoskeeper according to the role. 
+When eosstorebest before the 21st,eosio in host B running normal,and when hostB check eosstorebest isn't produce blocks with 2 round,eoskeeper of host C could perform command,let node B produce.
+When eosstorebest before the 21st,eosio in host C running normal,and when hostC check eosstorebest isn't produce blocks with 2 round,eoskeeper of host C could perform command,let node C produce.
 
 == about configuration ==  
 all eosio need to be configured http-server-address = 127.0.0.1:8888  
 In order to /v1/producer/* api, eosio-configuration of bp node need add plugin = eosio::producer_api_plugin  
 
 == about admin ==  
-任何一台主机出现故障时，都需要及时修复。修复后，使各个节点恢复自己的角色。  
+When each host fails, it needs to be repaired in time. After the fix, restore each node to its own role.
 
 
 ### Relevant command
