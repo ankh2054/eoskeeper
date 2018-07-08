@@ -1,5 +1,4 @@
 # eoskeeper
-EOS BP节点高可用守护进程
 
 [中文链接](https://github.com/eosstore/eoskeeper/blob/master/README.md)
 
@@ -79,15 +78,15 @@ eoskeeper是一个用于监控eos程序的守护进程，并有报警和推送�
 当eosstorebest在前21名，B主机eosio运行正常，并且，B主机检测到2轮出块循环都没有eosstorebest账户时，B主机的eoskeeper会执行命令，使B出块。  
 当eosstorebest在前21名，C主机eosio运行正常，并且，C主机检测到6轮出块循环都没有eosstorebest账户时，C主机的eoskeeper会执行命令，使C出块。    
 
-== 配置相关 ==  
-所有eosio需要配置 http-server-address = 127.0.0.1:8888  
-为了/v1/producer/* api BP节点的eosio配置文件需增加 plugin = eosio::producer_api_plugin  
+== about configuration ==  
+all eosio need to be configured http-server-address = 127.0.0.1:8888  
+In order to /v1/producer/* api, eosio-configuration of bp node need add plugin = eosio::producer_api_plugin  
 
-== 管理相关 ==  
+== about admin ==  
 任何一台主机出现故障时，都需要及时修复。修复后，使各个节点恢复自己的角色。  
 
 
-### 相关命令
+### Relevant command
 ```bash
 curl --request POST --url http://127.0.0.1:8888/v1/producer/pause
 curl --request POST --url http://127.0.0.1:8888/v1/producer/resume
